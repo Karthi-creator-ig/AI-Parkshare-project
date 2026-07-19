@@ -1,0 +1,84 @@
+
+{
+  "entities": {
+    "ParkingSpot": {
+      "title": "Parking Spot",
+      "description": "Information about a parking space listed for rent.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "description": "UID of the host who owns the spot." },
+        "ownerName": { "type": "string", "description": "Display name of the host." },
+        "name": { "type": "string", "description": "Display name of the parking spot." },
+        "address": { "type": "string", "description": "Physical address of the spot." },
+        "phone": { "type": "string", "description": "Contact phone number of the host." },
+        "bikePricePerHour": { "type": "number", "description": "Rate for a single bike." },
+        "carPricePerHour": { "type": "number", "description": "Rate for a single car." },
+        "bikeMonthlyRate": { "type": "number", "description": "Monthly rate for a bike." },
+        "carMonthlyRate": { "type": "number", "description": "Monthly rate for a car." },
+        "imageUrls": { 
+          "type": "array", 
+          "items": { "type": "string" },
+          "description": "List of URLs of the spot's photos." 
+        },
+        "status": { "type": "string", "enum": ["available", "occupied", "pending"], "description": "Current availability status." },
+        "description": { "type": "string", "description": "Longer description of the spot." },
+        "lat": { "type": "number", "description": "Latitude coordinate." },
+        "lng": { "type": "number", "description": "Longitude coordinate." },
+        "verified": { "type": "boolean", "description": "Whether the spot has been AI-verified." }
+      },
+      "required": ["ownerId", "name", "address", "phone", "lat", "lng", "imageUrls"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A reservation of a parking spot by a user.",
+      "type": "object",
+      "properties": {
+        "spotId": { "type": "string", "description": "ID of the booked parking spot." },
+        "userId": { "type": "string", "description": "UID of the user booking the spot." },
+        "hostId": { "type": "string", "description": "UID of the spot owner/host." },
+        "startTime": { "type": "string", "format": "date-time", "description": "When the booking starts." },
+        "endTime": { "type": "string", "format": "date-time", "description": "When the booking ends." },
+        "status": { "type": "string", "enum": ["pending", "active", "awaiting-payment", "completed", "cancelled"], "description": "Status of the booking." },
+        "totalAmount": { "type": "number", "description": "Total cost of the session." },
+        "bikeCount": { "type": "number", "description": "Number of bikes booked." },
+        "carCount": { "type": "number", "description": "Number of cars booked." },
+        "isSubscription": { "type": "boolean", "description": "Whether this is a monthly subscription." },
+        "otp": { "type": "string", "description": "Security code for verification." },
+        "otpExpiresAt": { "type": "string", "format": "date-time", "description": "Expiration of the OTP." }
+      },
+      "required": ["spotId", "userId", "hostId", "startTime", "status", "bikeCount", "carCount"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "User feedback for a parking session.",
+      "type": "object",
+      "properties": {
+        "bookingId": { "type": "string" },
+        "reviewerId": { "type": "string" },
+        "revieweeId": { "type": "string" },
+        "spotId": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bookingId", "reviewerId", "rating"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/spots/{spotId}": {
+      "schema": "ParkingSpot",
+      "description": "Collection of all parking spots available in the system."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Collection of all user bookings."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Collection of user reviews."
+    }
+  }
+}

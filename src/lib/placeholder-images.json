@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "parking-1",
+      "description": "Modern urban parking garage",
+      "imageUrl": "https://picsum.photos/seed/park1/800/600",
+      "imageHint": "parking garage"
+    },
+    {
+      "id": "parking-2",
+      "description": "Clean driveway in suburbia",
+      "imageUrl": "https://picsum.photos/seed/park2/800/600",
+      "imageHint": "driveway house"
+    },
+    {
+      "id": "parking-3",
+      "description": "Spacious commercial lot",
+      "imageUrl": "https://picsum.photos/seed/park3/800/600",
+      "imageHint": "parking lot"
+    },
+    {
+      "id": "hero-bg",
+      "description": "Night city car light trails",
+      "imageUrl": "https://picsum.photos/seed/hero/1920/1080",
+      "imageHint": "night city"
+    }
+  ]
+}
